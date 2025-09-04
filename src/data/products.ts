@@ -1,0 +1,71 @@
+import type { Product } from '@/lib/types'
+
+export const CATEGORIES = [
+  'Fruits', 'Vegetables', 'Herbs & Spices', 'Eggs & Dairy', 'Organic', 'Value Packs'
+]
+
+export const PRODUCTS: Product[] = [
+  {
+    id: 'pr-mango-namdocmai',
+    name: 'Mango (Nam Dok Mai)',
+    image: 'https://images.unsplash.com/photo-1542838132-92c53300491e?q=80&w=1200&auto=format&fit=crop',
+    unit: 'kg',
+    retailPrice: 85,
+    b2bTiers: [{ minQty: 10, price: 75, unit: 'kg' }, { minQty: 50, price: 65, unit: 'kg' }],
+    categories: ['Fruits', 'Organic'],
+    producerId: 'p-railay-farm',
+    origin: { district: 'Ao Nang' },
+    lotId: 'NDM-2025-0901',
+    traceabilityUrl: '#',
+    availability: 'in_season',
+  },
+  {
+    id: 'pr-coconut-young',
+    name: 'Young Coconut',
+    image: 'https://images.unsplash.com/photo-1615486363874-46b17ab9b5d1?q=80&w=1200&auto=format&fit=crop',
+    unit: 'piece',
+    retailPrice: 35,
+    b2bTiers: [{ minQty: 24, price: 30, unit: 'piece' }, { minQty: 100, price: 26, unit: 'piece' }],
+    categories: ['Fruits', 'Value Packs'],
+    producerId: 'p-krabi-green',
+    origin: { district: 'Nuea Khlong' },
+    lotId: 'COCO-2025-0830',
+    traceabilityUrl: '#',
+    availability: 'in_season',
+  },
+  {
+    id: 'pr-basil-thai',
+    name: 'Thai Basil',
+    image: 'https://images.unsplash.com/photo-1615484477765-0e5e1f8a68d1?q=80&w=1200&auto=format&fit=crop',
+    unit: 'bunch',
+    retailPrice: 20,
+    b2bTiers: [{ minQty: 20, price: 16, unit: 'bunch' }],
+    categories: ['Herbs & Spices', 'Organic'],
+    producerId: 'p-krabi-green',
+    origin: { district: 'Nuea Khlong' },
+    availability: 'limited',
+  },
+  {
+    id: 'pr-chili-birdseye',
+    name: 'Bird’s Eye Chili',
+    image: 'https://images.unsplash.com/photo-1514511547119-0d495a7c6193?q=80&w=1200&auto=format&fit=crop',
+    unit: 'kg',
+    retailPrice: 120,
+    categories: ['Herbs & Spices'],
+    producerId: 'p-tiger-orchards',
+    origin: { district: 'Khlong Thom' },
+    availability: 'out_of_season',
+  },
+  {
+    id: 'pr-eggs-free-range',
+    name: 'Free-range Eggs',
+    image: 'https://images.unsplash.com/photo-1486591978090-1c0a37eb6f61?q=80&w=1200&auto=format&fit=crop',
+    unit: 'tray (30)',
+    retailPrice: 135,
+    b2bTiers: [{ minQty: 10, price: 120, unit: 'tray (30)' }],
+    categories: ['Eggs & Dairy', 'Value Packs'],
+    producerId: 'p-railay-farm',
+    origin: { district: 'Ao Nang' },
+    availability: 'in_season',
+  },
+]
