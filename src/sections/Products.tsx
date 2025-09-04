@@ -1,0 +1,1 @@
+export default function Products(){ return <section id="products" className="section"><div className="container-xl"><h2 className="text-3xl font-extrabold">Products</h2><p className="text-gray-600 dark:text-gray-300">Catalog placeholder. Filters & grouping coming next.</p></div></section> }

@@ -1,0 +1,1 @@
+export default function WhyUs(){ return <section id="why" className="section"><div className="container-xl"><h2 className="text-3xl font-extrabold">Why Us</h2><p className="mt-2 text-gray-600 dark:text-gray-300">Verified producers • Fair prices • Local logistics.</p></div></section> }

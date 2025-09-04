@@ -1,0 +1,1 @@
+export default function Gallery(){ return <section id="gallery" className="section"><div className="container-xl"><h2 className="text-3xl font-extrabold">Gallery</h2><p className="text-gray-600 dark:text-gray-300">WebP images soon.</p></div></section> }

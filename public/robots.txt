@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://krabifarm.vercel.app/sitemap.xml

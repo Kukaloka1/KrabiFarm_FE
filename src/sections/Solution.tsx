@@ -1,0 +1,1 @@
+export default function Solution(){ return <section id="solution" className="section"><div className="container-xl"><h2 className="text-3xl font-extrabold">Solution</h2><p className="text-gray-600 dark:text-gray-300">Direct sales, QR payments, traceability and pooled routes.</p></div></section> }

@@ -1,0 +1,1 @@
+export default function ProblemSolution(){ return <section id="problem" className="section"><div className="container-xl"><h2 className="text-3xl font-extrabold">Problem</h2><p className="text-gray-600 dark:text-gray-300">Low/unstable prices; poor traceability; logistics friction.</p></div></section> }

@@ -1,0 +1,1 @@
+export default function CTA(){ return <section id="cta" className="section"><div className="container-xl"><h2 className="text-3xl font-extrabold">Contact</h2><a className="btn mt-4 inline-block" href="mailto:hello@krabifarm.example">Email us</a></div></section> }
