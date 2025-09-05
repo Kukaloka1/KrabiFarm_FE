@@ -25,8 +25,9 @@ export default function ProductCard({
     : p.image
 
   return (
-    <article className="card overflow-hidden flex flex-col">
-      <div className="relative aspect-[4/3] bg-border overflow-hidden">
+    <article className="card h-full overflow-hidden flex flex-col">
+      {/* Imagen fija 4:3 para uniformidad */}
+      <div className="relative aspect-[4/3] bg-border">
         <img
           src={src}
           srcSet={p.image.includes('unsplash.com') ? makeSrcSet(p.image) : undefined}
@@ -35,15 +36,17 @@ export default function ProductCard({
           loading="lazy"
           decoding="async"
           className="w-full h-full object-cover"
+          onError={(e)=>{ (e.currentTarget as HTMLImageElement).src = '/placeholder.webp' }}
         />
         <div className="absolute top-2 left-2 flex items-center gap-2">
           <SeasonBadge status={p.availability}/>
         </div>
       </div>
 
+      {/* Cuerpo con flex para alinear botones al fondo */}
       <div className="p-4 flex-1 flex flex-col">
         <div className="flex items-start justify-between gap-2">
-          <h3 className="font-semibold">{p.name}</h3>
+          <h3 className="font-semibold leading-snug line-clamp-2">{p.name}</h3>
           {producerVerified && <VerifiedBadge/>}
         </div>
         <div className="mt-1 text-sm text-muted">
@@ -52,6 +55,7 @@ export default function ProductCard({
           <span>{p.origin.district}</span>
         </div>
 
+        {/* Precio / Tiers */}
         {!b2bView ? (
           <div className="mt-3">
             <div className="text-lg font-bold">฿{p.retailPrice} <span className="text-sm font-medium text-muted">/ {p.unit}</span></div>
@@ -71,11 +75,9 @@ export default function ProductCard({
           </div>
         )}
 
+        {/* Botonera en el fondo */}
         <div className="mt-auto pt-3 flex items-center gap-2">
-          <button
-            className="btn"
-            onClick={()=>{ add(p,1); onAdded?.() }}
-          >
+          <button className="btn" onClick={()=>{ add(p,1); onAdded?.() }}>
             {t('products.actions.add')}
           </button>
           {p.traceabilityUrl && (

@@ -1,6 +1,6 @@
-export function makeSrcSet(base: string, widths: number[] = [400, 800, 1200]) {
-  // Espera URLs de Unsplash con auto=format&fm=webp&q=80
-  const clean = base.includes('auto=') ? base : (base + (base.includes('?') ? '&' : '?') + 'auto=format&fm=webp&q=80')
-  return widths.map(w => `${clean}&w=${w} ${w}w`).join(', ')
+export function makeSrcSet(url: string){
+  const q = (w:number)=> `${url}?auto=format&fm=webp&q=80&w=${w} ${w}w`
+  return [480, 640, 800, 1024, 1280].map(q).join(', ')
 }
-export const responsiveSizes = '(min-width:1280px) 300px, (min-width:1024px) 25vw, (min-width:640px) 33vw, 100vw'
+export const responsiveSizes =
+  '(max-width: 640px) 100vw, (max-width: 1024px) 50vw, (max-width: 1536px) 33vw, 25vw'

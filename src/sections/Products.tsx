@@ -21,7 +21,7 @@ export default function Products({ onAdded }: { onAdded?: ()=>void }){
   const [sortBy, setSortBy] = useState<SortBy>('newest')
   const [openProducer, setOpenProducer] = useState<string | null>(null)
 
-  // Cargar desde URL una vez
+  // URL -> estado
   useEffect(()=>{
     const sp = readParams()
     setSearch(getString(sp,'q',''))
@@ -35,7 +35,7 @@ export default function Products({ onAdded }: { onAdded?: ()=>void }){
     if(['newest','priceAsc','priceDesc','popular'].includes(s)) setSortBy(s as SortBy)
   },[])
 
-  // Escribir a URL cuando cambie estado (sin ensuciar el histórico)
+  // estado -> URL
   useEffect(()=>{
     setParams({
       q: search || undefined,
@@ -80,28 +80,33 @@ export default function Products({ onAdded }: { onAdded?: ()=>void }){
     return list
   },[search, selectedCats, producerId, verifiedOnly, inSeasonOnly, sortBy, producerMap])
 
+  const GRID = 'grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4'
+
   return (
     <section id="products" className="section">
       <div className="container-xl">
         <h2 className="text-3xl md:text-4xl font-extrabold mb-3">{t('products.title')}</h2>
-        <p className="text-muted mb-6">{t('products.subtitle')}</p>
+        <p className="text-muted mb-4 md:mb-6">{t('products.subtitle')}</p>
 
-        <FilterBar
-          categories={CATEGORIES}
-          producers={PRODUCERS}
-          search={search} setSearch={setSearch}
-          selectedCats={selectedCats} setSelectedCats={setSelectedCats}
-          producerId={producerId} setProducerId={setProducerId}
-          verifiedOnly={verifiedOnly} setVerifiedOnly={setVerifiedOnly}
-          inSeasonOnly={inSeasonOnly} setInSeasonOnly={setInSeasonOnly}
-          b2bView={b2bView} setB2bView={setB2bView}
-          groupBy={groupBy} setGroupBy={setGroupBy}
-          sortBy={sortBy} setSortBy={setSortBy}
-          t={t}
-        />
+        {/* === STICKY FILTER BAR (fondo sólido, no transparente) === */}
+        <div className="sticky top-[var(--header-h)] z-40 bg-bg/100 pb-2">
+          <FilterBar
+            categories={CATEGORIES}
+            producers={PRODUCERS}
+            search={search} setSearch={setSearch}
+            selectedCats={selectedCats} setSelectedCats={setSelectedCats}
+            producerId={producerId} setProducerId={setProducerId}
+            verifiedOnly={verifiedOnly} setVerifiedOnly={setVerifiedOnly}
+            inSeasonOnly={inSeasonOnly} setInSeasonOnly={setInSeasonOnly}
+            b2bView={b2bView} setB2bView={setB2bView}
+            groupBy={groupBy} setGroupBy={setGroupBy}
+            sortBy={sortBy} setSortBy={setSortBy}
+            t={t}
+          />
+        </div>
 
         {!groupBy ? (
-          <div className="mt-6 grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+          <div className={`mt-6 ${GRID}`}>
             {filtered.map(p=>{
               const pr = producerMap[p.producerId]
               return (
@@ -129,7 +134,7 @@ export default function Products({ onAdded }: { onAdded?: ()=>void }){
                     <h3 className="text-2xl font-bold">{pr?.name}</h3>
                     {pr?.verified && <span className="badge badge--verified">Verified</span>}
                   </div>
-                  <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+                  <div className={GRID}>
                     {prods.map(p=>(
                       <ProductCard
                         key={p.id}

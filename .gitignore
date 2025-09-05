@@ -16,3 +16,5 @@ pnpm-debug.log*
 .env
 *.log
 coverage
+
+.env.example
