@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { PRODUCTS, CATEGORIES } from '@/data/products'
 import { PRODUCERS } from '@/data/producers'
 import type { Product } from '@/lib/types'
@@ -6,8 +6,10 @@ import ProductCard from '@/components/ProductCard'
 import FilterBar, { type SortBy } from '@/components/FilterBar'
 import Modal from '@/components/Modal'
 import { useI18n } from '@/lib/i18n'
+import SchemaOrgProducts from '@/components/SchemaOrgProducts'
+import { readParams, getString, getBool, getList, setParams } from '@/lib/url'
 
-export default function Products(){
+export default function Products({ onAdded }: { onAdded?: ()=>void }){
   const { t } = useI18n()
   const [search, setSearch] = useState('')
   const [selectedCats, setSelectedCats] = useState<string[]>([])
@@ -19,18 +21,44 @@ export default function Products(){
   const [sortBy, setSortBy] = useState<SortBy>('newest')
   const [openProducer, setOpenProducer] = useState<string | null>(null)
 
+  // Cargar desde URL una vez
+  useEffect(()=>{
+    const sp = readParams()
+    setSearch(getString(sp,'q',''))
+    setProducerId(getString(sp,'pid',''))
+    setSelectedCats(getList(sp,'cats'))
+    setVerifiedOnly(getBool(sp,'verified', false))
+    setInSeasonOnly(getBool(sp,'season', false))
+    setB2bView(getBool(sp,'b2b', false))
+    setGroupBy(getBool(sp,'group', false))
+    const s = getString(sp,'sort','newest')
+    if(['newest','priceAsc','priceDesc','popular'].includes(s)) setSortBy(s as SortBy)
+  },[])
+
+  // Escribir a URL cuando cambie estado (sin ensuciar el histórico)
+  useEffect(()=>{
+    setParams({
+      q: search || undefined,
+      pid: producerId || undefined,
+      cats: selectedCats.length ? selectedCats.map(encodeURIComponent).join(',') : undefined,
+      verified: verifiedOnly || undefined,
+      season: inSeasonOnly || undefined,
+      b2b: b2bView || undefined,
+      group: groupBy || undefined,
+      sort: sortBy !== 'newest' ? sortBy : undefined,
+    }, 'replace')
+  },[search, producerId, selectedCats, verifiedOnly, inSeasonOnly, b2bView, groupBy, sortBy])
+
   const producerMap = useMemo(()=>Object.fromEntries(PRODUCERS.map(p=>[p.id,p])),[])
   const byProducer = useMemo(()=>{
     return PRODUCTS.reduce<Record<string, Product[]>>((acc,p)=>{
-      if(!acc[p.producerId]) acc[p.producerId] = []
-      acc[p.producerId].push(p)
+      (acc[p.producerId] ||= []).push(p)
       return acc
     },{})
   },[])
 
   const filtered = useMemo(()=>{
     let list = PRODUCTS.slice()
-
     if(search.trim()){
       const q = search.toLowerCase()
       list = list.filter(p =>
@@ -38,18 +66,10 @@ export default function Products(){
         producerMap[p.producerId]?.name.toLowerCase().includes(q)
       )
     }
-    if(selectedCats.length){
-      list = list.filter(p => selectedCats.every(c => p.categories.includes(c)))
-    }
-    if(producerId){
-      list = list.filter(p => p.producerId === producerId)
-    }
-    if(verifiedOnly){
-      list = list.filter(p => producerMap[p.producerId]?.verified)
-    }
-    if(inSeasonOnly){
-      list = list.filter(p => p.availability === 'in_season')
-    }
+    if(selectedCats.length){ list = list.filter(p => selectedCats.every(c => p.categories.includes(c))) }
+    if(producerId){ list = list.filter(p => p.producerId === producerId) }
+    if(verifiedOnly){ list = list.filter(p => producerMap[p.producerId]?.verified) }
+    if(inSeasonOnly){ list = list.filter(p => p.availability === 'in_season') }
 
     switch(sortBy){
       case 'priceAsc': list.sort((a,b)=>a.retailPrice - b.retailPrice); break
@@ -57,7 +77,6 @@ export default function Products(){
       case 'popular': list.sort((a,b)=>a.name.localeCompare(b.name)); break
       default: break
     }
-
     return list
   },[search, selectedCats, producerId, verifiedOnly, inSeasonOnly, sortBy, producerMap])
 
@@ -93,6 +112,7 @@ export default function Products(){
                   producerVerified={!!pr?.verified}
                   b2bView={b2bView}
                   onOpenProducer={()=>setOpenProducer(p.producerId)}
+                  onAdded={onAdded}
                 />
               )
             })}
@@ -118,6 +138,7 @@ export default function Products(){
                         producerVerified={!!pr?.verified}
                         b2bView={b2bView}
                         onOpenProducer={()=>setOpenProducer(pid)}
+                        onAdded={onAdded}
                       />
                     ))}
                   </div>
@@ -148,6 +169,8 @@ export default function Products(){
             </div>
           )}
         </Modal>
+
+        <SchemaOrgProducts products={filtered}/>
       </div>
     </section>
   )

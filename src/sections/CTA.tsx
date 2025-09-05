@@ -1,8 +1,12 @@
 import Container from '@/components/Container'
 import { CONTACT } from '@/data/site'
 import PromptPay from '@/components/PromptPay'
+import Modal from '@/components/Modal'
+import ContactForm from '@/components/ContactForm'
+import { useState } from 'react'
 
 export default function CTA(){
+  const [open, setOpen] = useState(false)
   const msg = encodeURIComponent('Hello! I would like to place an order / request a quote.')
   const wa = `https://wa.me/${CONTACT.whatsappIntl}?text=${msg}`
   return (
@@ -14,11 +18,16 @@ export default function CTA(){
           <div className="mt-6 flex flex-wrap justify-center gap-3">
             <a className="btn" href={wa} target="_blank" rel="noopener noreferrer">WhatsApp</a>
             <a className="btn btn--outline" href={`mailto:${CONTACT.email}`}>Email</a>
+            <button className="btn btn--gold" onClick={()=>setOpen(true)}>Open contact form</button>
             <PromptPay />
           </div>
           <p className="text-sm text-muted mt-3">WhatsApp: {CONTACT.whatsappDisplay}</p>
         </div>
       </Container>
+
+      <Modal open={open} onClose={()=>setOpen(false)} title="Contact form">
+        <ContactForm/>
+      </Modal>
     </section>
   )
 }

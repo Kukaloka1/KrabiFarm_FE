@@ -1,6 +1,5 @@
 import Header from '@/components/Header'
 import Hero from '@/sections/Hero'
-import About from '@/sections/About'
 import WhyUs from '@/sections/WhyUs'
 import ProblemSolution from '@/sections/ProblemSolution'
 import Solution from '@/sections/Solution'
@@ -9,21 +8,27 @@ import Gallery from '@/sections/Gallery'
 import CTA from '@/sections/CTA'
 import Footer from '@/sections/Footer'
 
+import InquiryDrawer from '@/features/inquiry/InquiryDrawer'
+import InquiryFab from '@/features/inquiry/InquiryFab'
+import { useState } from 'react'
+
 export default function App(){
+  const [openInquiry, setOpenInquiry] = useState(false)
   return (
-    <>
+    <div className="min-h-dvh bg-bg">
       <Header/>
       <main>
         <Hero/>
-        <About/>
         <WhyUs/>
         <ProblemSolution/>
         <Solution/>
-        <Products/>
+        <Products onAdded={()=>setOpenInquiry(true)}/>
         <Gallery/>
         <CTA/>
       </main>
       <Footer/>
-    </>
+      <InquiryFab onOpen={()=>setOpenInquiry(true)} />
+      <InquiryDrawer open={openInquiry} onClose={()=>setOpenInquiry(false)} />
+    </div>
   )
 }

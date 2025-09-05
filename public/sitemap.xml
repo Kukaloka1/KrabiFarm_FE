@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://krabifarm.vercel.app/</loc></url>
-  <url><loc>https://krabifarm.vercel.app/#about</loc></url>
-  <url><loc>https://krabifarm.vercel.app/#whyus</loc></url>
-  <url><loc>https://krabifarm.vercel.app/#problems</loc></url>
-  <url><loc>https://krabifarm.vercel.app/#solution</loc></url>
-  <url><loc>https://krabifarm.vercel.app/#products</loc></url>
-  <url><loc>https://krabifarm.vercel.app/#gallery</loc></url>
-  <url><loc>https://krabifarm.vercel.app/#cta</loc></url>
+  <url>
+    <loc>https://krabifarm.example/</loc>
+    <lastmod>2025-09-04</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
 </urlset>

@@ -1,5 +1,28 @@
 @import "tailwindcss";
 
+/* ===== Self-hosted fonts ===== */
+@font-face{
+  font-family: 'Inter var';
+  src: url('/fonts/InterVariable.woff2') format('woff2-variations');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face{
+  font-family: 'Inter var';
+  src: url('/fonts/InterVariable-Italic.woff2') format('woff2-variations');
+  font-weight: 100 900;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face{
+  font-family: 'Noto Sans Thai';
+  src: url('/fonts/NotoSansThai[wght].ttf') format('truetype-variations');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
 /* ===== Theme tokens (Light) ===== */
 @theme {
   --color-bg:        #FBFEFC;
@@ -38,11 +61,16 @@
   --color-accent-50: #221E10;
 }
 
-/* ===== Global tokens & utilities (sin estilos inline) ===== */
+/* ===== Global tokens & utilities (sin inline) ===== */
 :root{ --header-h:72px; }
 html{ scroll-behavior:smooth; }
 [id]{ scroll-margin-top: calc(var(--header-h) + 8px); }
-body{ @apply bg-bg text-text antialiased; }
+
+/* Tipografías base: Inter (latín) con fallback a Noto Sans Thai para tailandés */
+body{
+  font-family: 'Inter var','Noto Sans Thai',ui-sans-serif,system-ui,-apple-system,'Segoe UI',Roboto,'Helvetica Neue',Arial,'Apple Color Emoji','Segoe UI Emoji';
+  @apply bg-bg text-text antialiased;
+}
 
 /* Header sticky (sin inline style) */
 header[data-sticky]{ height: var(--header-h); }

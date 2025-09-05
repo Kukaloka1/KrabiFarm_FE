@@ -1,0 +1,49 @@
+<!doctype html><html lang="en"><head>
+<meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Traceability</title>
+<style>
+  :root{ --bg:#FBFEFC; --fg:#121513; --card:#fff; --bd:#E6EDE7; --pri:#1F7A4C; }
+  @media (prefers-color-scheme: dark){
+    :root{ --bg:#0B0F0D; --fg:#EEF5F0; --card:#121715; --bd:#223028; --pri:#32A86A; }
+  }
+  body{ background:var(--bg); color:var(--fg); font: 15px/1.5 system-ui, -apple-system, Segoe UI, Roboto, Inter, Arial; margin:0; }
+  .wrap{ max-width:720px; margin:0 auto; padding:24px; }
+  .card{ background:var(--card); border:1px solid var(--bd); border-radius:16px; padding:20px; }
+  h1{ font-size:24px; margin:0 0 8px; }
+  .meta{ color:#5A635D; }
+  .grid{ display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+  .badge{ display:inline-block; padding:4px 10px; border-radius:999px; border:1px solid var(--bd); background:rgba(31,122,76,.08); }
+  a.btn{ display:inline-flex; align-items:center; gap:8px; padding:10px 14px; border-radius:12px; text-decoration:none; color:white; background:var(--pri); }
+</style>
+</head><body>
+<div class="wrap">
+  <h1>Lot Traceability</h1>
+  <p class="meta">Scan result details (demo).</p>
+  <div class="card" id="card">
+    <div class="grid">
+      <div>
+        <strong>Lot</strong><div id="lot">—</div>
+      </div>
+      <div>
+        <strong>Product</strong><div id="product">—</div>
+      </div>
+      <div>
+        <strong>Producer</strong><div id="producer">—</div>
+      </div>
+      <div>
+        <strong>Origin</strong><div id="origin">Krabi</div>
+      </div>
+    </div>
+    <hr style="border:0;border-top:1px solid var(--bd);margin:16px 0">
+    <div><span class="badge">Anchored: Blockchain (demo)</span></div>
+    <p style="margin-top:12px">This is a demo page. Replace with your live lot endpoint later.</p>
+    <a class="btn" href="/">Back to site</a>
+  </div>
+</div>
+<script>
+  const q=new URLSearchParams(location.search);
+  document.getElementById('lot').textContent=q.get('lot')||'—';
+  document.getElementById('product').textContent=q.get('product')||'—';
+  document.getElementById('producer').textContent=q.get('producer')||'—';
+</script>
+</body></html>
