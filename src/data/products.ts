@@ -1,4 +1,12 @@
+// src/data/products.ts
 import type { Product } from '@/lib/types'
+
+// 🔽 importa assets locales (ajusta extensiones si difieren)
+import mangoImg  from '@/assets/mango.jpeg'
+import cocoImg   from '@/assets/coco.jpeg'
+import basilImg  from '@/assets/basil.jpeg'
+import chiliImg  from '@/assets/chilli.jpeg'   // archivo con doble “l”
+import eggsImg   from '@/assets/eggs.jpeg'
 
 export const CATEGORIES = [
   'Fruits', 'Vegetables', 'Herbs & Spices', 'Eggs & Dairy', 'Organic', 'Value Packs'
@@ -8,7 +16,7 @@ export const PRODUCTS: Product[] = [
   {
     id: 'pr-mango-namdocmai',
     name: 'Mango (Nam Dok Mai)',
-    image: 'https://images.unsplash.com/photo-1542838132-92c53300491e',
+    image: mangoImg,               // ← local
     unit: 'kg',
     retailPrice: 85,
     b2bTiers: [{ minQty: 10, price: 75, unit: 'kg' }, { minQty: 50, price: 65, unit: 'kg' }],
@@ -22,7 +30,7 @@ export const PRODUCTS: Product[] = [
   {
     id: 'pr-coconut-young',
     name: 'Young Coconut',
-    image: 'https://images.unsplash.com/photo-1615486363874-46b17ab9b5d1',
+    image: cocoImg,                // ← local
     unit: 'piece',
     retailPrice: 35,
     b2bTiers: [{ minQty: 24, price: 30, unit: 'piece' }, { minQty: 100, price: 26, unit: 'piece' }],
@@ -36,7 +44,7 @@ export const PRODUCTS: Product[] = [
   {
     id: 'pr-basil-thai',
     name: 'Thai Basil',
-    image: 'https://images.unsplash.com/photo-1615484477765-0e5e1f8a68d1',
+    image: basilImg,               // ← local
     unit: 'bunch',
     retailPrice: 20,
     b2bTiers: [{ minQty: 20, price: 16, unit: 'bunch' }],
@@ -50,7 +58,7 @@ export const PRODUCTS: Product[] = [
   {
     id: 'pr-chili-birdseye',
     name: 'Bird’s Eye Chili',
-    image: 'https://images.unsplash.com/photo-1514511547119-0d495a7c6193',
+    image: chiliImg,               // ← local (archivo chilli.jpeg)
     unit: 'kg',
     retailPrice: 120,
     categories: ['Herbs & Spices'],
@@ -63,7 +71,7 @@ export const PRODUCTS: Product[] = [
   {
     id: 'pr-eggs-free-range',
     name: 'Free-range Eggs',
-    image: 'https://images.unsplash.com/photo-1486591978090-1c0a37eb6f61',
+    image: eggsImg,                // ← local
     unit: 'tray (30)',
     retailPrice: 135,
     b2bTiers: [{ minQty: 10, price: 120, unit: 'tray (30)' }],
@@ -75,3 +83,4 @@ export const PRODUCTS: Product[] = [
     availability: 'in_season',
   },
 ]
+

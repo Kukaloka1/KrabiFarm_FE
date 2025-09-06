@@ -4,14 +4,27 @@
     "useDefineForClassFields": true,
     "lib": ["ES2020", "DOM", "DOM.Iterable"],
     "module": "ESNext",
-    "skipLibCheck": true,
-    "moduleResolution": "Bundler",
+    "moduleResolution": "bundler",
+    "jsx": "react-jsx",
+
+    "baseUrl": ".",
+    "paths": { "@/*": ["src/*"] },
+
+    "types": ["vite/client"],
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "react-jsx",
-    "baseUrl": ".",
-    "paths": { "@/*": ["src/*"] }
+    "skipLibCheck": true,
+
+    "strict": true,
+    "forceConsistentCasingInFileNames": true
+
+    /* Opcionales recomendados (actívalos cuando el build esté limpio):
+    , "noFallthroughCasesInSwitch": true
+    , "noImplicitOverride": true
+    , "noUncheckedIndexedAccess": true
+    */
   },
   "include": ["src"]
 }
+

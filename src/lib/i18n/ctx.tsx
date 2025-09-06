@@ -1,7 +1,8 @@
-import { createContext, useContext, useEffect, useMemo, useState, ReactNode } from 'react'
+/* eslint-disable react-refresh/only-export-components */
+import { createContext, useContext, useEffect, useMemo, useState, type ReactNode } from 'react'
 import { readParams, setParams } from '@/lib/url'
 
-type Locale = 'en' | 'th'
+export type Locale = 'en' | 'th'
 type Dict = Record<string, any>
 
 const dicts: Record<Locale, Dict> = {
@@ -10,24 +11,46 @@ const dicts: Record<Locale, Dict> = {
     hero: {
       title:'Fresh & Verified from Local Farms',
       subtitle:'Direct from Krabi’s farms to hotels, restaurants and families. QR payments, traceability and collaborative logistics.',
-      primary:'Browse Products', secondary:'Contact'
+      primary:'Browse Products', secondary:'Contact',
+      extra:'Connecting Krabi’s farmers directly with global markets through technology, traceability and fair trade.'
     },
     about: {
       title:'About',
       body:'A practical backbone for the Krabi Smart Region. We enable direct sales, digital payments (QR/PromptPay), and lot-level traceability for verified producers.'
     },
-    why: { title:'Why choose us', list:[
-      'Verified producers and origin transparency',
-      'Fair pricing with direct sales',
-      'Local logistics with reliable partners'
+    why: {
+      title: 'Why choose us',
+      subtitle: 'Verified origin, fair prices and reliable local logistics — a modern supply chain for Krabi produce.',
+      list: [
+        'Verified producers and origin transparency',
+        'Fair pricing with direct sales',
+        'Local logistics with reliable partners'
     ]},
-    problem: { title:'Problem', body:'Low and unstable farmer margins, little traceability, and logistics friction limit growth and trust.' },
+    problem: {
+      title:'Problem',
+      body:'Low and unstable farmer margins, little traceability, and logistics friction limit growth and trust.',
+      list: [
+        {
+          title: 'Unstable farmer margins',
+          body:  'Prices driven by middlemen and weekly volatility reduce income and planning capacity.'
+        },
+        {
+          title: 'Low traceability & quality confidence',
+          body:  'Buyers can’t easily verify origin, lot or practices — trust and repeat orders suffer.'
+        },
+        {
+          title: 'Fragmented last-mile logistics',
+          body:  'Uncoordinated routes, cash handling and small MOQs cause friction, delays and waste.'
+        }
+      ]
+    },
     solution: { title:'Solution', list:[
       'Direct B2C & B2B sales (marketplace EN/TH)',
       'Instant QR payments; TouristDigiPay-ready',
       'Lot-level QR traceability with chain anchoring',
       'B2B tiers and delivery scheduling',
-      'Collaborative hubs (markets, hotels, airport)'
+      'Collaborative hubs (markets, hotels, airport)',
+      'Open a global channel for Krabi agriculture'
     ]},
     products: {
       title:'Products', subtitle:'Filter by category, producer and availability. Toggle B2B tiers or group by producer.',
@@ -50,24 +73,46 @@ const dicts: Record<Locale, Dict> = {
     hero: {
       title:'สดใหม่และผ่านการยืนยันจากฟาร์มท้องถิ่น',
       subtitle:'จากฟาร์มในกระบี่ถึงโรงแรม ร้านอาหาร และครอบครัว ชำระเงินด้วยคิวอาร์ ติดตามย้อนกลับได้ และโลจิสติกส์แบบร่วมมือ',
-      primary:'ดูสินค้า', secondary:'ติดต่อ'
+      primary:'ดูสินค้า', secondary:'ติดต่อ',
+      extra:'เชื่อมโยงเกษตรกรกระบี่โดยตรงกับตลาดโลก ผ่านเทคโนโลยี การติดตามย้อนกลับ และการค้าที่เป็นธรรม'
     },
     about: {
       title:'เกี่ยวกับ',
       body:'โครงสร้างพื้นฐานสำหรับ Krabi Smart Region เราสนับสนุนการขายโดยตรง การชำระเงินดิจิทัล (QR/พร้อมเพย์) และการติดตามย้อนกลับระดับล็อตสำหรับผู้ผลิตที่ผ่านการตรวจสอบ'
     },
-    why: { title:'ทำไมต้องเรา', list:[
-      'ผู้ผลิตผ่านการยืนยันและโปร่งใสแหล่งที่มา',
-      'ราคายุติธรรมด้วยการขายโดยตรง',
-      'โลจิสติกส์ท้องถิ่นที่เชื่อถือได้'
+    why: {
+      title: 'ทำไมต้องเรา',
+      subtitle: 'แหล่งที่มาตรวจสอบได้ ราคายุติธรรม และโลจิสติกส์ท้องถิ่นที่เชื่อถือได้ — โซ่อุปทันทันสมัยสำหรับผลผลิตกระบี่',
+      list: [
+        'ผู้ผลิตผ่านการยืนยันและโปร่งใสแหล่งที่มา',
+        'ราคายุติธรรมด้วยการขายโดยตรง',
+        'โลจิสติกส์ท้องถิ่นที่เชื่อถือได้'
     ]},
-    problem: { title:'ปัญหา', body:'กำไรเกษตรกรต่ำและไม่แน่นอน การติดตามย้อนกลับมีจำกัด และโลจิสติกส์ติดขัด' },
+    problem: {
+      title:'ปัญหา',
+      body:'กำไรเกษตรกรต่ำและไม่แน่นอน การติดตามย้อนกลับมีจำกัด และโลจิสติกส์ติดขัดทำให้การเติบโตสะดุดและความเชื่อต่ำ',
+      list: [
+        {
+          title: 'กำไรเกษตรกรไม่เสถียร',
+          body:  'ราคาถูกกำหนดโดยคนกลางและผันผวนรายสัปดาห์ ทำให้รายได้และการวางแผนไม่มั่นคง'
+        },
+        {
+          title: 'การติดตามย้อนกลับ/ความเชื่อมั่นต่ำ',
+          body:  'ผู้ซื้อยืนยันแหล่งที่มา ล็อต หรือกระบวนการได้ยาก ความเชื่อใจและการสั่งซ้ำจึงลดลง'
+        },
+        {
+          title: 'โลจิสติกส์ปลายทางกระจัดกระจาย',
+          body:  'เส้นทางไม่ประสาน การรับเงินสด และขั้นต่ำสั่งซื้อเล็ก ทำให้เกิดความฝืดล่าช้าและสูญเสีย'
+        }
+      ]
+    },
     solution: { title:'ทางแก้', list:[
       'การขายทั้ง B2C และ B2B (ตลาดสองภาษา EN/TH)',
       'ชำระเงินด้วยคิวอาร์ทันที รองรับ TouristDigiPay',
       'ติดตามย้อนกลับระดับล็อตพร้อมเชื่อมโยงบล็อกเชน',
       'ราคาแบบขั้นบันได B2B และกำหนดเวลาจัดส่ง',
-      'ฮับโลจิสติกส์แบบร่วมมือ (ตลาด โรงแรม สนามบิน)'
+      'ฮับโลจิสติกส์แบบร่วมมือ (ตลาด โรงแรม สนามบิน)',
+      'เปิดช่องทางระดับโลกสำหรับสินค้าเกษตรกระบี่'
     ]},
     products: {
       title:'สินค้า', subtitle:'กรองตามหมวดหมู่ ผู้ผลิต และฤดูกาล สลับมุมมอง B2B หรือจัดกลุ่มตามผู้ผลิต',
@@ -87,8 +132,8 @@ const dicts: Record<Locale, Dict> = {
   }
 }
 
-type Ctx = { t:(path:string)=>string; lang:Locale; setLang:(l:Locale)=>void }
-const I18nCtx = createContext<Ctx>({ t:(k)=>k, lang:'en', setLang:()=>{} })
+type Ctx = { t:(path:string)=>any; lang:Locale; setLang:(l:Locale)=>void }
+export const I18nCtx = createContext<Ctx>({ t:(k)=>k, lang:'en', setLang:()=>{} })
 
 function resolveInitialLang(): Locale {
   const fromUrl = readParams().get('lang')
@@ -98,16 +143,26 @@ function resolveInitialLang(): Locale {
   return 'en'
 }
 
-export function I18nProvider({children}:{children:ReactNode}){
-  const [lang,setLang] = useState<Locale>(resolveInitialLang)
-  useEffect(()=>{
+export function I18nProvider({ children }: { children: ReactNode }) {
+  const [lang, setLang] = useState<Locale>(resolveInitialLang)
+
+  useEffect(() => {
     localStorage.setItem('lang', lang)
     setParams({ lang }, 'replace')
-  },[lang])
+  }, [lang])
 
-  const t = useMemo(()=> (path:string)=>{
-    return path.split('.').reduce<any>((acc,key)=> (acc && acc[key] !== undefined)? acc[key] : null, dicts[lang]) ?? path
-  },[lang])
-  return <I18nCtx.Provider value={{t,lang,setLang}}>{children}</I18nCtx.Provider>
+  const t = useMemo(() => (path: string) => {
+    return path.split('.').reduce<any>(
+      (acc, key) => (acc && acc[key] !== undefined) ? acc[key] : null,
+      dicts[lang]
+    ) ?? path
+  }, [lang])
+
+  return (
+    <I18nCtx.Provider value={{ t, lang, setLang }}>
+      {children}
+    </I18nCtx.Provider>
+  )
 }
+
 export function useI18n(){ return useContext(I18nCtx) }

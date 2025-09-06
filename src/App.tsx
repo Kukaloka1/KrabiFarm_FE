@@ -1,7 +1,7 @@
 import Header from '@/components/Header'
 import Hero from '@/sections/Hero'
 import WhyUs from '@/sections/WhyUs'
-import ProblemSolution from '@/sections/ProblemSolution'
+import Problem from '@/sections/Problem'
 import Solution from '@/sections/Solution'
 import Products from '@/sections/Products'
 import Gallery from '@/sections/Gallery'
@@ -20,7 +20,7 @@ export default function App(){
       <main>
         <Hero/>
         <WhyUs/>
-        <ProblemSolution/>
+        <Problem/>
         <Solution/>
         <Products onAdded={()=>setOpenInquiry(true)}/>
         <Gallery/>
