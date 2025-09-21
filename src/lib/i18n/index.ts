@@ -1,2 +1,2 @@
-export { I18nProvider } from './ctx'
-export { useI18n } from './useI18n'
+export { I18nProvider, I18nCtx, useI18n } from './ctx'
+export type { Locale } from './ctx'

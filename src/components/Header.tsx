@@ -3,6 +3,7 @@ import { useTheme } from '@/hooks/useTheme'
 import { useI18n } from '@/lib/i18n'
 import { smoothScrollTo } from '@/lib/scroll'
 import { useActiveSection } from '@/hooks/useActiveSection'
+import PromoBanner from '@/components/PromoBanner'
 import logo from '@/assets/logo.png'
 
 const NAV = [
@@ -32,7 +33,7 @@ export default function Header(){
     e.preventDefault(); setOpen(false); smoothScrollTo(href); history.replaceState(null,'',href)
   }
 
-  // Bloqueo scroll + focus trap
+  // focus trap drawer
   useEffect(()=>{
     if(!open) return
     const prevOverflow = document.body.style.overflow
@@ -51,55 +52,162 @@ export default function Header(){
   },[open])
 
   return (
-    <header data-sticky className="sticky top-0 z-50 bg-surface border-b border-border">
-      <div className="container-xl h-[var(--header-h)] flex items-center justify-between">
-        <a href="#home" onClick={(e)=>onClick(e as any,'#home')} className="flex items-center gap-2 focus-outline" aria-label="Home">
-          <img src={logo} alt="KrabiFarm" className="h-7 w-auto md:h-8 lg:h-9" loading="eager" decoding="async" />
-          <span className="hidden sm:inline font-extrabold">KrabiFarm</span>
-        </a>
-
-        <nav className="hidden md:flex items-center gap-6">
-          {NAV.map(i=>{
-            const isActive = active === i.href.slice(1)
-            return (
-              <a key={i.key} href={i.href} onClick={(e)=>onClick(e,i.href)}
-                 aria-current={isActive?'page':undefined}
-                 className={`text-sm font-semibold hover:text-primary ${isActive?'text-primary underline underline-offset-4':''}`}>
-                {t(`nav.${i.key}`)}
+    <header data-sticky className="sticky top-0 z-50 bg-surface border-b border-border shadow-sm">
+      {/* Top bar */}
+      <div className="bg-background py-2 text-sm">
+        <div className="container-xl flex items-center justify-between gap-6">
+          <div className="flex items-center gap-6 text-muted-foreground">
+            <a href="#" className="hover:text-primary transition-colors">{t('header.start_selling','Start Selling')}</a>
+            <a href="#how" onClick={(e)=>onClick(e as any,'#how')} className="hover:text-primary transition-colors">{t('header.how_it_works','How it works')}</a>
+          </div>
+          <div className="flex items-center gap-6">
+            <div className="hidden sm:flex items-center gap-2 text-muted-foreground">
+              <span>{t('header.follow','Follow us')}</span>
+              <a href="#" aria-label="Facebook" className="hover:opacity-80 transition-opacity">
+                <img src="/facebook.svg" alt="Facebook" className="h-4 w-4" />
               </a>
-            )
-          })}
-        </nav>
-
-        <div className="hidden md:flex items-center gap-3">
-          <button className="px-3 py-2 rounded-lg border border-border focus-outline" onClick={toggle} aria-label="Toggle theme">
-            {theme==='dark'?'🌙':'☀️'}
-          </button>
-          <select className="px-2 py-2 rounded-lg border border-border bg-transparent focus-outline"
-                  value={lang} onChange={e=>setLang(e.target.value as any)} aria-label="Language">
-            <option value="en">EN</option><option value="th">TH</option>
-          </select>
+              <a href="#" aria-label="LINE" className="hover:opacity-80 transition-opacity">
+                <img src="/LINE.svg" alt="LINE" className="h-4 w-4" />
+              </a>
+              <a href="#" aria-label="Google" className="hover:opacity-80 transition-opacity">
+                <img src="/google.svg" alt="Google" className="h-4 w-4" />
+              </a>
+            </div>
+            <select className="px-2 py-1 rounded-md border border-border bg-transparent hover:bg-accent/10 transition-colors focus-outline text-sm"
+                    value={lang} onChange={e=>setLang(e.target.value as any)} aria-label="Language">
+              <option value="en">EN</option><option value="th">TH</option>
+            </select>
+            <button className="p-1 rounded-md border border-border hover:bg-accent/10 transition-colors focus-outline" onClick={toggle} aria-label="Toggle theme">
+              {theme==='dark'?'🌙':'☀️'}
+            </button>
+          </div>
         </div>
-
-        <button className="md:hidden p-2 focus-outline" aria-label="Menu" onClick={()=>setOpen(true)}>☰</button>
       </div>
 
+      {/* Main header */}
+      <div className="bg-surface py-3 md:py-4">
+        <div className="container-xl flex items-center justify-between gap-6">
+          {/* Logo */}
+          <a href="#home" onClick={(e)=>onClick(e as any,'#home')} className="flex items-center gap-3 focus-outline" aria-label="Home">
+            <img src={logo} alt="KrabiFarm" className="h-12 w-auto md:h-16 lg:h-20" loading="eager" decoding="async" />
+            <span className="hidden sm:inline font-bold text-2xl md:text-3xl">KrabiFarm</span>
+          </a>
+
+          {/* Nav (desktop) */}
+          <nav className="hidden md:flex items-center gap-6 lg:gap-8">
+            {NAV.map(i=>{
+              const isActive = active === i.href.slice(1)
+              return (
+                <a key={i.key} href={i.href} onClick={(e)=>onClick(e,i.href)}
+                   aria-current={isActive?'page':undefined}
+                   className={`text-sm md:text-[0.95rem] font-medium hover:text-primary transition-colors ${isActive?'text-primary underline underline-offset-4':''}`}>
+                  {t(`nav.${i.key}`)}
+                </a>
+              )
+            })}
+          </nav>
+
+          {/* Right cluster */}
+          <div className="flex items-center gap-4">
+            {/* auth */}
+            <div className="hidden md:flex flex-col items-end">
+              <div className="flex items-center gap-3">
+                <button className="px-4 py-2 rounded-md border border-border bg-background hover:bg-accent/10 transition-colors focus-outline text-sm font-medium">
+                  {t('header.log_in','Log in')}
+                </button>
+                <button className="px-4 py-2 rounded-md bg-primary text-primary-foreground font-medium hover:bg-primary/90 transition-colors focus-outline text-sm">
+                  {t('header.sign_up','Sign up')}
+                </button>
+              </div>
+              {/* or with (más separado de los botones) */}
+              <div className="mt-2 flex items-center gap-3 text-xs text-muted-foreground">
+                <span className="hidden sm:inline">{t('header.or_with','Or sign in with')}</span>
+                <span className="flex items-center gap-1">
+                  <img src="/LINE.svg" alt="LINE" className="h-4 w-4" /> LINE
+                </span>
+                <span className="flex items-center gap-1">
+                  <img src="/google.svg" alt="Google" className="h-4 w-4" /> Google
+                </span>
+              </div>
+            </div>
+
+            {/* mobile menu */}
+            <button className="md:hidden p-2 rounded-md hover:bg-accent/10 transition-colors focus-outline" aria-label="Menu" onClick={()=>setOpen(true)}>
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {/* Drawer móvil */}
       {open && (
-        <div ref={drawerRef} className="md:hidden absolute inset-x-0 top-[var(--header-h)] bg-surface border-b border-border" role="dialog" aria-modal="true">
-          <div className="container-xl py-3 space-y-1">
-            {NAV.map(i=>(
-              <a key={i.key} href={i.href} onClick={(e)=>onClick(e,i.href)} className="block px-2 py-3 border-t border-border">
-                {t(`nav.${i.key}`)}
-              </a>
-            ))}
-            <div className="flex items-center gap-3 px-2 py-3 border-t border-border">
-              <button className="px-3 py-2 rounded-lg border border-border focus-outline" onClick={toggle}>
-                {theme==='dark'?'🌙':'☀️'}
+        <div ref={drawerRef} className="md:hidden fixed inset-x-0 top-[calc(theme(spacing.10)+theme(spacing.16))] bottom-0 bg-surface overflow-y-auto" role="dialog" aria-modal="true">
+          <div className="container-xl py-6 space-y-6">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <img src={logo} alt="KrabiFarm" className="h-12 w-auto" />
+                <span className="font-bold text-2xl">KrabiFarm</span>
+              </div>
+              <button className="p-2 rounded-md hover:bg-accent/10 transition-colors focus-outline" onClick={()=>setOpen(false)} aria-label="Close">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+                </svg>
               </button>
-              <select className="px-2 py-2 rounded-lg border border-border bg-transparent flex-1 focus-outline" value={lang} onChange={e=>setLang(e.target.value as any)}>
-                <option value="en">EN</option><option value="th">TH</option>
-              </select>
-              <button className="ml-auto px-3 py-2 focus-outline" onClick={()=>setOpen(false)} aria-label="Close">✕</button>
+            </div>
+
+            <nav className="space-y-1">
+              {NAV.map(i=>(
+                <a key={i.key} href={i.href} onClick={(e)=>onClick(e,i.href)} className="block px-4 py-3 text-base font-medium hover:bg-accent/10 rounded-md transition-colors">
+                  {t(`nav.${i.key}`)}
+                </a>
+              ))}
+            </nav>
+
+            <div className="space-y-4">
+              <div className="grid grid-cols-2 gap-3">
+                <button className="px-4 py-3 rounded-md border border-border bg-background hover:bg-accent/10 transition-colors focus-outline text-base font-medium">
+                  {t('header.log_in','Log in')}
+                </button>
+                <button className="px-4 py-3 rounded-md bg-primary text-primary-foreground font-medium hover:bg-primary/90 transition-colors focus-outline text-base">
+                  {t('header.sign_up','Sign up')}
+                </button>
+              </div>
+
+              <div className="flex flex-col gap-2 text-sm">
+                <a href="#" className="px-4 py-2 hover:bg-accent/10 rounded-md transition-colors">{t('header.start_selling','Start Selling')}</a>
+                <a href="#how" onClick={(e)=>onClick(e as any,'#how')} className="px-4 py-2 hover:bg-accent/10 rounded-md transition-colors">{t('header.how_it_works','How it works')}</a>
+              </div>
+
+              <div className="flex items-center gap-4 px-4 text-sm text-muted-foreground">
+                <span>{t('header.follow','Follow us')}</span>
+                <a href="#" aria-label="Facebook" className="hover:opacity-80 transition-opacity">
+                  <img src="/facebook.svg" alt="Facebook" className="h-4 w-4" />
+                </a>
+                <a href="#" aria-label="LINE" className="hover:opacity-80 transition-opacity">
+                  <img src="/LINE.svg" alt="LINE" className="h-4 w-4" />
+                </a>
+                <a href="#" aria-label="Google" className="hover:opacity-80 transition-opacity">
+                  <img src="/google.svg" alt="Google" className="h-4 w-4" />
+                </a>
+              </div>
+
+              {/* or with (con margen-top extra en mobile) */}
+              <div className="px-4 pt-4 border-t border-border text-sm text-muted-foreground">
+                <div className="flex flex-col gap-2">
+                  <span className="mt-1">{t('header.or_with','Or sign in with')}</span>
+                  <div className="flex gap-4">
+                    <button className="flex items-center gap-2 px-4 py-2 border border-border rounded-md hover:bg-accent/10 transition-colors">
+                      <img src="/LINE.svg" alt="LINE" className="h-4 w-4" /> LINE
+                    </button>
+                    <button className="flex items-center gap-2 px-4 py-2 border border-border rounded-md hover:bg-accent/10 transition-colors">
+                      <img src="/google.svg" alt="Google" className="h-4 w-4" /> Google
+                    </button>
+                  </div>
+                </div>
+              </div>
+
             </div>
           </div>
         </div>
