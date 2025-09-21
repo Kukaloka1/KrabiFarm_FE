@@ -1,3 +1,4 @@
+//About//
 import Container from '@/components/Container'
 import { useI18n } from '@/lib/i18n'
 export default function About(){

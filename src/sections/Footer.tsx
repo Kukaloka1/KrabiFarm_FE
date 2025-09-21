@@ -1,3 +1,4 @@
+//Footer/
 import { useI18n } from '@/lib/i18n'
 import logo from '@/assets/logo.png'
 import bitLogo from '@/assets/bit.svg'

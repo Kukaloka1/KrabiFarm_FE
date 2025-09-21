@@ -1,3 +1,4 @@
+//Gallery/
 import { useEffect, useState } from 'react'
 import Container from '@/components/Container'
 import { GALLERY } from '@/data/gallery'

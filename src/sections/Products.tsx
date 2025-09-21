@@ -1,3 +1,4 @@
+//Products.tsx//
 import { useEffect, useMemo, useState } from 'react'
 import { PRODUCTS, CATEGORIES } from '@/data/products'
 import { PRODUCERS } from '@/data/producers'

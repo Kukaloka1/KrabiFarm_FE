@@ -1,3 +1,4 @@
+//Problem.tsx//
 import Container from '@/components/Container'
 import { useI18n } from '@/lib/i18n'
 import { BadgeDollarSign, QrCode, Truck } from 'lucide-react'
